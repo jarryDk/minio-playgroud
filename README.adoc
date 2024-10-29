@@ -1,0 +1,35 @@
+= Minio playground
+
+[source,bash]
+----
+podman run -it --rm=true \
+    --name quarkus-minio \
+    -p 9000:9000 \
+    -p 9001:9001 \
+    -e MINIO_ROOT_USER=admin \
+    -e MINIO_ROOT_PASSWORD=password\
+    minio/minio server /data --console-address ":9001"
+----
+
+API     : http://127.0.0.1:9000
+WebUI   : http://127.0.0.1:9001
+
+== Testing
+
+[source,bash]
+----
+curl -X POST http://localhost:8080/todos \
+	-H 'Accept: application/json' \
+	-H 'Content-Type: application/json' \
+	-d '{"id":17,"fileName":"nisse.txt"}'
+----
+
+[source,bash]
+----
+curl -X GET "http://localhost:8080/todos/nisse.txt" -H "accept: application/json"
+----
+
+== Links
+
+- https://min.io/docs/minio/linux/reference/minio-mc.html#quickstart
+- https://min.io/download?license=agpl&platform=linux
